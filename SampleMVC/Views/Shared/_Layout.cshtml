@@ -1,11 +1,19 @@
-    @using System.Text.Json;
 @{
-    string FullName = "Guest";
-
-    if (Context.Session.GetString("user") != null)
+    UserDTO user = null;
+    if(Context.Session.GetString("user")!=null)
     {
-        UserDTO user = JsonSerializer.Deserialize<UserDTO>(Context.Session.GetString("user"));
-        FullName = user.FirstName + " " + user.LastName;
+        user = JsonConvert.DeserializeObject<UserDTO>(Context.Session.GetString("user"));
+    }
+    else
+    {
+        user = new UserDTO();
+        user.Roles = new List<RoleDTO>()
+        {
+            new RoleDTO
+            {
+                RoleID=1,RoleName="anonymous"
+            }
+        };
     }
 }
 
@@ -70,7 +78,7 @@
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                   aria-expanded="true" aria-controls="collapseTwo">
+                    aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Home Page</span>
                 </a>
@@ -86,12 +94,12 @@
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                   aria-expanded="true" aria-controls="collapseUtilities">
+                    aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Contributor</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                     data-parent="#accordionSidebar">
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="utilities-color.html">Colors</a>
