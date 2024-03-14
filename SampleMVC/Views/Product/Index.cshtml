@@ -1,0 +1,19 @@
+﻿@model List<SampleMVC.ViewModels.Product>
+
+<h2>Products</h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Name</td>
+            <td>@product.Price</td>
+            <td>@Html.ActionLink("Add to Cart", "AddToCart", "ShoppingCart", new { productId = product.Id, productName = product.Name, price = product.Price, quantity = 1 }, null)</td>
+        </tr>
+    }
+</table>
+
